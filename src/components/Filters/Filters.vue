@@ -1,32 +1,36 @@
 <template>
     <div>
-        <nav class="navbar navbar-light bg-light pt-3">
-            <span class="navbar-brand mb-0 h1">Navbar</span>
-            <ul class="nav  nav-tabs justify-content-end">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Questões</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Provas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Sair</a>
-                </li>
-            </ul>
-        </nav>
-        <div class="container-fluid">
-            <div class="row">
-                <slot name="content"></slot>
-
-                
+        <form>
+            <div>
+                <h5>Nível</h5>
+                <div v-for="(nivel, index) in niveis" :key="index" class="form-check ml-3 mb-1">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-model="nivel.value">
+                    <label class="form-check-label" for="defaultCheck1">
+                        {{ nivel.nome }}
+                    </label>
+                </div>
             </div>
-        </div>
+            <div class="mt-4">
+                <h5>Áreas do Conhecimento</h5>
+                <div v-for="(area, index) in areas" :key="index" class="form-check ml-3 mb-1">
+                        <div class="mt-4">
+                        <h6>{{ area.nome }} </h6>
+                        <div v-for="(disciplina, index) in area.disciplinas" :key="index" class="form-check ml-3 mb-1">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-model="disciplina.value">
+                            <label class="form-check-label" for="defaultCheck1">
+                                {{ disciplina.nome }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </template>
 
 <script>
 export default {
-  name: "DashBoard",
+  name: "Filters",
   data(){
         return {
             niveis: [
@@ -64,7 +68,3 @@ export default {
     },
 };
 </script>
-
-<style lang="css" src="./style.css">
-
-</style>
