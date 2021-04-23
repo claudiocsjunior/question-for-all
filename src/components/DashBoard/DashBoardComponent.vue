@@ -4,7 +4,7 @@
             <span class="navbar-brand mb-0 h1">Navbar</span>
             <ul class="nav  nav-tabs justify-content-end">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#">Questões</a>
+                    <router-link class="nav-link active" to="/">Questões</router-link>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Provas</a>
@@ -62,6 +62,8 @@ export default {
             ]
         };
     },
+    methods: {
+    }
 };
 </script>
 

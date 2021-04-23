@@ -4,8 +4,8 @@
             <div>
                 <h5>Nível</h5>
                 <div v-for="(nivel, index) in niveis" :key="index" class="form-check ml-3 mb-1">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-model="nivel.value">
-                    <label class="form-check-label" for="defaultCheck1">
+                    <input class="form-check-input" type="checkbox" value="" :id="'nivel' + index" v-model="nivel.value">
+                    <label class="form-check-label" :for="'nivel' + index">
                         {{ nivel.nome }}
                     </label>
                 </div>
@@ -16,8 +16,8 @@
                         <div class="mt-4">
                         <h6>{{ area.nome }} </h6>
                         <div v-for="(disciplina, index) in area.disciplinas" :key="index" class="form-check ml-3 mb-1">
-                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" v-model="disciplina.value">
-                            <label class="form-check-label" for="defaultCheck1">
+                            <input class="form-check-input" type="checkbox" value="" :id="'disciplina' + area.nome + index" v-model="disciplina.value">
+                            <label class="form-check-label" :for="'disciplina' + area.nome + index">
                                 {{ disciplina.nome }}
                             </label>
                         </div>

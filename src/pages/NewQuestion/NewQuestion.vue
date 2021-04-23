@@ -5,36 +5,34 @@
                 <div class="col-12 height-total">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item" aria-current="page">Questões</li>
+                            <li class="breadcrumb-item" aria-current="page" v-on:click.prevent="toHome">Questões</li>
                             <li class="breadcrumb-item active" aria-current="page">Criar</li>
                         </ol>
                     </nav>
                      <div class="d-flex align-items-center justify-content-center mt-4 row">
-                       <div class="col-9 mt-4">
-                            <label for="inlineFormCustomSelect">Área do conhecimento</label>
-                            <select class="custom-select" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                         <div class="col-9 mt-4">
+                            <label for="niveis">Área do conhecimento</label>
+                            <select class="custom-select" id="niveis">
+                                <option selected>Selecione..</option>
+                                <option v-for="(area, index) in areas" :key="index" :value="index">{{area.nome}}</option>
                             </select>
                         </div>
                         <div class="col-9 mt-4">
-                            <label for="inlineFormCustomSelect">Disciplinas</label>
-                            <select class="custom-select" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                            </select>
+                        <fieldset disabled>
+                                <label for="inlineFormCustomSelect">Disciplinas</label>
+                                <select class="custom-select" id="inlineFormCustomSelect">
+                                    <option selected>Choose...</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                        </fieldset>
                         </div>
                         <div class="col-9 mt-4">
-                            <label for="inlineFormCustomSelect">Nível Acadêmico</label>
-                            <select class="custom-select" id="inlineFormCustomSelect">
-                                <option selected>Choose...</option>
-                                <option value="1">One</option>s
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <label for="niveis">Nível Acadêmico</label>
+                            <select class="custom-select" id="niveis">
+                                <option selected>Selecione..</option>
+                                <option v-for="(nivel, index) in niveis" :key="index" :value="index">{{nivel.nome}}</option>
                             </select>
                         </div>
                         <div class="col-9 mt-4">
@@ -73,8 +71,21 @@
                             <input type="text" class="form-control mb-3" placeholder="Conteudo">
                             <input type="text" class="form-control" placeholder="Conteudo">
 
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <button type="button" class="btn btn-success" v-on:click.prevent="redirectNewQuestion">Adicionar Alternativa</button>
+                            <div class="d-flex align-items-center justify-content-center mt-2 mb-4">
+                                <button type="button" class="btn btn-primary" v-on:click.prevent="redirectNewQuestion">Adicionar Alternativa</button>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="d-flex flex-row">
+                                        <button type="button" class="btn btn-danger" v-on:click.prevent="redirectNewQuestion">Nova Questão</button>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="d-flex flex-row-reverse">
+                                        <button type="button" class="btn btn-success" v-on:click.prevent="redirectNewQuestion">Nova Questão</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -95,11 +106,43 @@ export default {
     },
     data(){
         return {
-           //OBJ
+           niveis: [
+               {"nome": "Fundamental 1", "active" : false},
+               {"nome": "Fundamental 2", "active" : false},
+               {"nome": "Ensino Médio", "active" : false},
+               {"nome": "Superior", "active" : false},
+            ],
+            areas: [
+               {"nome": "Humanas", 
+                "disciplinas": [
+                    {"nome": "História", "active" : false},
+                    {"nome": "Geografia", "active" : false},
+                    {"nome": "Filosofia", "active" : false},
+                    {"nome": "Sociologia", "active" : false}
+                    ]
+                },
+                {"nome": "Ciências da Natureza", 
+                "disciplinas": [
+                    {"nome": "Fisica", "active" : false},
+                    {"nome": "Quimica", "active" : false},
+                    {"nome": "Biologia", "active" : false},
+                    ]
+                },
+                {"nome": "Linguagens e Códigos", 
+                "disciplinas": [
+                    {"nome": "Português", "active" : false},
+                    {"nome": "Inglês", "active" : false},
+                    {"nome": "Espanhol", "active" : false},
+                    {"nome": "Matematica", "active" : false},
+                    ]
+                },
+            ]
         };
     },
     methods:{
-        //methods
+        toHome(){
+            this.$router.push({ name: 'Home' });
+        }
     }
 }
 </script>
