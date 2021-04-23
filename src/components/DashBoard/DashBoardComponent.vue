@@ -7,7 +7,7 @@
                     <router-link class="nav-link active" to="/">Questões</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Provas</a>
+                    <a class="nav-link" href="/provas">Provas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sair</a>
