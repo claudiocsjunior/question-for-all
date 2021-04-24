@@ -29,6 +29,10 @@
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">Conteudo: {{ question.conteudo }}</h6>
                 <p class="card-text">{{ question.enunciado }}</p>
+                <div v-if="question.alternativas.length" class="mt-4">
+                    <h6 class="card-subtitle mb-2 text-muted">Alternativas</h6>
+                    <p class="card-text" v-for="(alternativa, index) in question.alternativas" :key="index">{{ index+1 }} - {{ alternativa }}</p>
+                </div>
                 <a href="#" class="card-link" v-on:click.prevent="mostrarResposta">Mostrar resposta</a>
                 <blockquote v-if="exibirResposta" class="blockquote mb-0">
                     <footer class="blockquote-footer">{{ question.resposta }}</footer>
@@ -40,9 +44,9 @@
 
 <script>
 export default {
-  name: "CardQuestion",
-  props: ['index', 'question', 'dados'],
-  data(){
+    name: "CardQuestion",
+    props: ['index', 'question', 'dados'],
+    data(){
         return {
             exibirResposta: false,
             exibirOptions: false

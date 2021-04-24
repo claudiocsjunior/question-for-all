@@ -4,7 +4,7 @@
             <div>
                 <h5>Nível</h5>
                 <div v-for="(nivel, index) in dados.niveis" :key="index" class="form-check ml-3 mb-1">
-                    <input class="form-check-input" type="checkbox" value="" :id="'nivel' + index" v-model="nivel.value">
+                    <input class="form-check-input" type="checkbox" value="" :id="'nivel' + index" v-model="nivel.value" v-on:input="filtrarPorNivel(index)">
                     <label class="form-check-label" :for="'nivel' + index">
                         {{ nivel.nome }}
                     </label>
@@ -30,11 +30,35 @@
 
 <script>
 export default {
-  name: "Filters",
-  props: ['dados'],
-  data(){
+    name: "Filters",
+    props: ['dados'],
+    data(){
         return {
+            filtros : {
+                niveis: [],
+                area: [
+                    {
+                        index: null,
+                        discplina: []
+                    }
+                ],
+            }
         };
     },
+    methods:{
+        filtrarPorNivel(index){
+            if (this.filtros.niveis.indexOf(index) > -1) {
+                var delIndex = this.filtros.niveis.indexOf(index);
+                alert("Encontrou no index " + delIndex + " e removeu");
+                this.filtros.niveis.splice(delIndex, 1);
+            } else {
+                alert("Não Encontrou e salvou");
+                this.filtros.niveis.push(index);
+            }
+
+
+            this.$emit('filtrarNivel', { niveis: this.filtros.niveis})
+        }
+    }
 };
 </script>
