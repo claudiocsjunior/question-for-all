@@ -3,7 +3,7 @@
         <dash-board>
               <template v-slot:content>
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5 border-right height-total pt-3">
-                   <filters/>
+                   <filters :dados="dados"/>
                 </div>
                 <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7 col-7 height-total">
                     <nav aria-label="breadcrumb">
@@ -14,7 +14,10 @@
                     <div class="d-flex flex-row-reverse">
                         <button type="button" class="btn btn-success" v-on:click.prevent="redirectNewQuestion">Nova Questão</button>
                     </div>
-                    <div class="d-flex align-items-center justify-content-center">
+                    <div v-if="questoes.length > 0">
+                        <card-question v-for="(questao, index) in questoes" :key="index" :index="index" :question="questao" :dados="dados"/>
+                    </div>
+                    <div v-if="questoes.length <= 0" class="d-flex align-items-center justify-content-center">
                         Nenhuma questão disponível
                     </div>
                 </div>
@@ -27,16 +30,76 @@
 
 import DashBoard from '../../components/DashBoard/DashBoardComponent';
 import Filters from '../../components/Filters/Filters';
+import CardQuestion from '../../components/CardQuestion/CardQuestion';
 
 export default {
     name: "Home",
      components: {
         DashBoard,
-        Filters
+        Filters,
+        CardQuestion
+    },
+    created: function () {
+        var bd = {
+            tipos: [
+               {"nome": "Objetiva"},
+               {"nome": "Discursiva"},
+            ], 
+            alternativa: "",
+            niveis: [
+               {"nome": "Fundamental 1", "active" : false},
+               {"nome": "Fundamental 2", "active" : false},
+               {"nome": "Ensino Médio", "active" : false},
+               {"nome": "Superior", "active" : false},
+            ],
+            areas: [
+               {"nome": "Humanas", 
+                "disciplinas": [
+                    {"nome": "História", "active" : false},
+                    {"nome": "Geografia", "active" : false},
+                    {"nome": "Filosofia", "active" : false},
+                    {"nome": "Sociologia", "active" : false}
+                    ]
+                },
+                {"nome": "Ciências da Natureza", 
+                "disciplinas": [
+                    {"nome": "Fisica", "active" : false},
+                    {"nome": "Quimica", "active" : false},
+                    {"nome": "Biologia", "active" : false},
+                    ]
+                },
+                {"nome": "Linguagens e Códigos", 
+                "disciplinas": [
+                    {"nome": "Português", "active" : false},
+                    {"nome": "Inglês", "active" : false},
+                    {"nome": "Espanhol", "active" : false},
+                    {"nome": "Matematica", "active" : false},
+                    ]
+                },
+            ]
+        };
+
+        var bdLocasStorage = localStorage.getItem("bd");
+
+        if(bdLocasStorage === null || bdLocasStorage === undefined){
+            localStorage.setItem("bd", JSON.stringify(bd));
+            bdLocasStorage = localStorage.getItem("bd");
+        }
+
+        this.dados = JSON.parse(bdLocasStorage);
+
+        var questoesLocasStorage = localStorage.getItem("questions");
+
+        if(questoesLocasStorage === null || questoesLocasStorage === undefined){
+            this.questoes = [];
+        }else{
+            this.questoes = JSON.parse(questoesLocasStorage);
+        }
     },
     data(){
         return {
-           //OBJ
+           questoes: [],
+           dados: []
         };
     },
     methods:{
