@@ -13,7 +13,7 @@
                         <div class="card">
                             <ul class="list-group list-group-flush">
                                 <a href="" v-on:click.prevent="mostrarOptions">
-                                    <li class="list-group-item">Excluir</li>
+                                    <li v-on:click="excluir(index)" class="list-group-item">Excluir</li>
                                 </a>
                             </ul>
                         </div>
@@ -58,6 +58,11 @@ export default {
         },
         mostrarOptions(){
             this.exibirOptions = !this.exibirOptions;
+        },
+        excluir(index){
+            console.log(index);
+            this.$emit('excluirQuestao', { index: index});
+
         }
     }
 };

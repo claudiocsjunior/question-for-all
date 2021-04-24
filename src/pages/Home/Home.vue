@@ -3,7 +3,7 @@
         <dash-board>
               <template v-slot:content>
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5 border-right height-total pt-3">
-                   <filters :dados="dados" v-on:filtrarNivel="filtrarPorNivel"/>
+                   <filters :dados="dados" v-on:filtrarQuestoes="filtrar"/>
                 </div>
                 <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7 col-7 height-total">
                     <nav aria-label="breadcrumb">
@@ -15,7 +15,7 @@
                         <button type="button" class="btn btn-success" v-on:click.prevent="redirectNewQuestion">Nova Questão</button>
                     </div>
                     <div v-if="questoes.length > 0">
-                        <card-question v-for="(questao, index) in getQuestoesFiltradas" :key="index" :index="index" :question="questao" :dados="dados" :filtros="filtrosNivel"/>
+                        <card-question v-for="(questao, index) in getQuestoesFiltradas" :key="index" :index="index" :question="questao" :dados="dados" :filtros="filtrosNivel" v-on:excluirQuestao="excluir"/>
                     </div>
                     <div v-if="questoes.length <= 0" class="d-flex align-items-center justify-content-center">
                         Nenhuma questão disponível
@@ -101,21 +101,36 @@ export default {
         return {
            questoes: [],
            dados: [],
-           filtrosNivel: []
+           filtrosNivel: [],
+           filtrosDisciplina: [],
         };
     },
     computed: {
         getQuestoesFiltradas: function () {
-            if(this.filtrosNivel.length > 0){
+            if(this.filtrosNivel.length > 0 || this.filtrosDisciplina.length > 0){
                 var newQuestoes = [];
 
                 console.log(this.questoes[0].nivel);
 
                 for(var i = 0; i < this.questoes.length; i++){
-                    for(var j = 0; j < this.filtrosNivel.length; j++){
+                    var adicionada = false;
 
-                        if(this.questoes[i].nivel === this.filtrosNivel[j]){
+                    for(var j = 0; j < this.filtrosDisciplina.length; j++){
+
+                        if(this.questoes[i].disciplinas === this.filtrosDisciplina[j]){
                             newQuestoes.push(this.questoes[i]);
+                            adicionada = true;
+                        }
+                    }
+
+                    if(!adicionada){
+                        for(var k = 0; k < this.filtrosDisciplina.length; k++){
+                            console.log(this.dados.areas[this.questoes[i].area].disciplinas[this.questoes[i].disciplina].nome);
+
+
+                            if(this.dados.areas[this.questoes[i].area].disciplinas[this.questoes[i].disciplina].nome === this.filtrosDisciplina[k]){
+                                newQuestoes.push(this.questoes[i]);
+                            }
                         }
                     }
                 }
@@ -130,8 +145,16 @@ export default {
         redirectNewQuestion(){
             this.$router.push({ name: 'newQuestion' });
         },
-        filtrarPorNivel(niveis){
-            this.filtrosNivel = niveis.niveis;
+        filtrar(filtros){
+            this.filtrosNivel = filtros.filtros.niveis;
+            this.filtrosDisciplina = filtros.filtros.disciplinas;
+        },
+        excluir(index){
+            this.questoes.splice(index, 1);
+
+            localStorage.setItem("questions", JSON.stringify(this.questoes));
+
+            alert("Questão excluída com sucesso");
         }
     }
 }
