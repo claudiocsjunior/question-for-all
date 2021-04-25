@@ -6,7 +6,13 @@
           <div class="d-flex align-items-center justify-content-center mt-4 row">
             
             <div class="col-9 mt-4 d-flex justify-content-end">
-              <button type="button" class="btn btn-success">Nova Prova</button>
+              <button
+                type="button"
+                class="btn btn-success"
+                v-on:click.prevent="redirectNewTest"
+              >
+                Nova Prova
+              </button>
             </div>
             
             <div class="col-9 mt-4 d-flex">
@@ -57,6 +63,11 @@
            //OBJ
         };
     },
+    methods: {
+      redirectNewTest() {
+        this.$router.push({ name: 'newTest' });
+      }
+    }
   }
 
 </script>
