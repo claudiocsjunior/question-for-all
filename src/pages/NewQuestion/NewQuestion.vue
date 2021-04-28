@@ -1,6 +1,6 @@
 <template>
     <div>
-        <dash-board>
+        <dash-board active="questao">
             <template v-slot:content>
                 <div class="col-12 height-total">
                     <nav aria-label="breadcrumb">

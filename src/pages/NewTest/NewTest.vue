@@ -1,12 +1,12 @@
 <template>
   <div>
-    <dash-board>
+    <dash-board active="prova">
       <template v-slot:content>
         <div class="col-12 height-total">
           <div class="d-flex align-items-center justify-content-center mt-4 row">
             
             <div class="col-9 mt-4 d-flex justify-content-center">
-              <h1>Noa Prova</h1>
+              <h1>Nova Prova</h1>
             </div>
 
             <div class="col-9 mt-4 d-flex align-items-center">

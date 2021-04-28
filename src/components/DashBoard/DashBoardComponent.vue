@@ -4,10 +4,10 @@
             <span class="navbar-brand mb-0 h1">Navbar</span>
             <ul class="nav  nav-tabs justify-content-end">
                 <li class="nav-item">
-                    <router-link class="nav-link active" to="/">Questões</router-link>
+                    <router-link :class="'nav-link ' + (active == 'questao' ? ' active ' : '') " to="/">Questões</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/provas">Provas</a>
+                    <a :class="'nav-link ' + (active === 'prova' ? ' active ' : '')" href="/provas">Provas</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Sair</a>
@@ -27,6 +27,7 @@
 <script>
 export default {
   name: "DashBoard",
+  props: ['active'],
   data(){
         return {
             niveis: [

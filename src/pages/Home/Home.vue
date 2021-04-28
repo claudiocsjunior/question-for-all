@@ -1,6 +1,6 @@
 <template>
     <div>
-        <dash-board>
+        <dash-board active="questao">
               <template v-slot:content>
                 <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5 col-5 border-right height-total pt-3">
                    <filters :dados="dados" v-on:filtrarQuestoes="filtrar"/>
@@ -115,9 +115,9 @@ export default {
                 for(var i = 0; i < this.questoes.length; i++){
                     var adicionada = false;
 
-                    for(var j = 0; j < this.filtrosDisciplina.length; j++){
+                    for(var j = 0; j < this.filtrosNivel.length; j++){
 
-                        if(this.questoes[i].disciplinas === this.filtrosDisciplina[j]){
+                        if(this.questoes[i].nivel === this.filtrosNivel[j]){
                             newQuestoes.push(this.questoes[i]);
                             adicionada = true;
                         }
